@@ -20,7 +20,7 @@ import { CardWrapper } from "@components/auth/CardWrapper";
 import { Input } from "@components/ui/input";
 import FormError from "@components/FormError";
 import FormSuccess from "@components/FormSuccess";
-import { login } from "@actions/login";
+import { register } from "@actions/register";
 import { useState, useTransition } from "react";
 
 export const RegisterForm = () => {
@@ -41,7 +41,7 @@ export const RegisterForm = () => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(values).then((data) => {
+      register(values).then((data) => {
         setError(data.error);
         setSuccess(data.success);
       });
