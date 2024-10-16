@@ -24,8 +24,8 @@ import { useState, useTransition } from "react";
 import SubmitBtn from "@components/SubmitBtn";
 
 export const LoginForm = () => {
-  const [error, setError] = useState<string | undefined>("");
-  const [success, setSuccess] = useState<string | undefined>("");
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -40,10 +40,14 @@ export const LoginForm = () => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
-      });
+      login(values)
+        .then((data) => {
+          setError(data.error);
+          setSuccess(data.success);
+        })
+        .catch(() => {
+          setError("Something went wrong. Please try again.");
+        });
     });
   };
 
@@ -99,7 +103,7 @@ export const LoginForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
 
-          <SubmitBtn isPending={isPending} label="Login"/>
+          <SubmitBtn isPending={isPending} label="Login" />
         </form>
       </Form>
     </CardWrapper>
