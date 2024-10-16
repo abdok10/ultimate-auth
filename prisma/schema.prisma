@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  password         String?
-  accounts      Account[]
+  id                 String    @id @default(cuid())
+  name               String?
+  email              String?   @unique
+  emailVerified      DateTime? @map("email_verified")
+  image              String?
+  password           String?
+  accounts           Account[]
  
   @@map("users")
 }
@@ -33,7 +33,7 @@ model Account {
   id_token           String? @db.Text
   session_state      String?
  
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@unique([provider, providerAccountId])
   @@map("accounts")

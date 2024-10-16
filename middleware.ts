@@ -1,12 +1,45 @@
-import { auth } from "@auth";
+// import { auth } from "@auth";
+import NextAuth, { Session } from "next-auth";
 
-export default auth((req) => {
+import authConfig from "@auth.config";
+import {
+  apiAuthPrefix,
+  authRoutes,
+  DEFAULT_LOGIN_REDIRECT,
+  publicRoutes,
+} from "@routes";
+import { NextRequest } from "next/server";
+
+const { auth } = NextAuth(authConfig);
+
+//NOTE - In this project, we will make all routes protected except the ones we specified in the middleware
+export default auth((req: NextRequest & { auth: Session | null }): Response | void =>{
+  const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  console.log("Route ======== ", req.nextUrl.pathname);
-  console.log("Logged In ==== ", isLoggedIn);
+
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+
+  if (isApiAuthRoute) {
+    return;
+  }
+
+  if (isAuthRoute) {
+    if (isLoggedIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return;
+  }
+
+  if (!isLoggedIn && !isPublicRoute) {
+    return Response.redirect(new URL("/auth/login", nextUrl));
+  }
+
+  return;
 });
 
-
+//NOTE - middleware will be invoked only on paths mentioned inside the matcher
 export const config = {
   // NOTE - Clerk previous matcher
   // matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],

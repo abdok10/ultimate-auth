@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -22,6 +21,7 @@ import FormError from "@components/FormError";
 import FormSuccess from "@components/FormSuccess";
 import { login } from "@actions/login";
 import { useState, useTransition } from "react";
+import SubmitBtn from "@components/SubmitBtn";
 
 export const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -74,7 +74,7 @@ export const LoginForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            ></FormField>
+            />
 
             <FormField
               control={form.control}
@@ -93,13 +93,13 @@ export const LoginForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            ></FormField>
+            />
           </div>
+
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" disabled={isPending} className="w-full">
-            Login
-          </Button>
+
+          <SubmitBtn isPending={isPending} label="Login"/>
         </form>
       </Form>
     </CardWrapper>

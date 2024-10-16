@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form";
 
 import { RegisterSchema } from "@schemas";
 import { z } from "zod";
-
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -22,6 +20,7 @@ import FormError from "@components/FormError";
 import FormSuccess from "@components/FormSuccess";
 import { register } from "@actions/register";
 import { useState, useTransition } from "react";
+import SubmitBtn from "@components/SubmitBtn";
 
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -115,11 +114,11 @@ export const RegisterForm = () => {
               )}
             ></FormField>
           </div>
+
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" disabled={isPending} className="w-full">
-            Register
-          </Button>
+
+          <SubmitBtn isPending={isPending} label="Create an account"/>
         </form>
       </Form>
     </CardWrapper>
