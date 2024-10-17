@@ -20,6 +20,7 @@ export default {
     }),
     Credentials({
       async authorize(credentials) {
+        if (!credentials) return null;
         const validatedFields = LoginSchema.safeParse(credentials);
 
         if (validatedFields.success) {
@@ -34,6 +35,8 @@ export default {
 
           return null;
         }
+        
+        return null;
       },
     }),
   ],
