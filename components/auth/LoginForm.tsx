@@ -22,8 +22,15 @@ import FormSuccess from "@components/FormSuccess";
 import { login } from "@actions/login";
 import { useState, useTransition } from "react";
 import SubmitBtn from "@components/SubmitBtn";
+import { useSearchParams } from "next/navigation";
 
 export const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "Email already in use with different provider"
+      : "";
+
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
@@ -40,14 +47,11 @@ export const LoginForm = () => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(values)
-        .then((data) => {
-          setError(data.error);
-          setSuccess(data.success);
-        })
-        .catch(() => {
-          setError("Something went wrong. Please try again.");
-        });
+      login(values).then((data) => {
+        setError(data?.error);
+        //TODO - Add when we add 2FA
+        // setSuccess(data.success);
+      });
     });
   };
 
@@ -100,7 +104,7 @@ export const LoginForm = () => {
             />
           </div>
 
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
 
           <SubmitBtn isPending={isPending} label="Login" />
