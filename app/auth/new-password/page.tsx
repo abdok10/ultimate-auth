@@ -1,7 +1,6 @@
-import NewPasswordForm from "@components/auth/NewPasswordForm";
+import { NewPasswordForm }from "@components/auth/NewPasswordForm";
 
-const NewVerificationPage = () => {
+const NewPasswordPage = () => {
   return <NewPasswordForm />;
 };
-export default NewVerificationPage;
- 
+export default NewPasswordPage;
