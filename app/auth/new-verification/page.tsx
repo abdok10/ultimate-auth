@@ -1,10 +1,7 @@
-import { CardWrapper } from "@components/auth/CardWrapper";
+import NewVerificationForm from "@components/auth/NewVerificationForm";
 
 const NewVerificationPage = () => {
-  return (
-    <CardWrapper headerLabel="Confirmation">
-      <h1>Hey</h1>
-    </CardWrapper>
-  );
+  return <NewVerificationForm />;
 };
 export default NewVerificationPage;
+ 

@@ -1,10 +1,11 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-
-import { z } from "zod";
-
+import { Input } from "@components/ui/input";
+import { Button } from "@components/ui/button";
+import { useSearchParams } from "next/navigation";
+import { useState, useTransition } from "react";
+import Link from "next/link";
+import { login } from "@actions/login";
 import {
   Form,
   FormControl,
@@ -13,16 +14,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import { CardWrapper } from "@components/auth/CardWrapper";
 import { LoginSchema } from "@schemas";
-import { Input } from "@components/ui/input";
 import FormError from "@components/FormError";
 import FormSuccess from "@components/FormSuccess";
-import { login } from "@actions/login";
-import { useState, useTransition } from "react";
 import SubmitBtn from "@components/SubmitBtn";
-import { useSearchParams } from "next/navigation";
+
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -50,7 +51,7 @@ export const LoginForm = () => {
       login(values).then((data) => {
         setError(data?.error);
         //TODO - Add when we add 2FA
-        // setSuccess(data.success);
+        setSuccess(data.success);
       });
     });
   };
@@ -98,6 +99,14 @@ export const LoginForm = () => {
                       placeholder="******"
                     />
                   </FormControl>
+                  <Button 
+                    size="sm"
+                    variant="link"
+                    asChild
+                    className=""
+                  >
+                    <Link href="/auth/reset">Forgot Password?</Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
