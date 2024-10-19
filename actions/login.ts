@@ -12,7 +12,10 @@ import { LoginSchema } from "@schemas";
 import { AuthError } from "next-auth";
 import { z } from "zod";
 
-export const login = async (values: z.infer<typeof LoginSchema>) => {
+export const login = async (
+  values: z.infer<typeof LoginSchema>,
+  callbackUrl?: string | null
+) => {
   const validatedField = LoginSchema.safeParse(values);
 
   if (!validatedField.success) {
@@ -73,7 +76,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
           userId: existingUser.id,
         },
       });
-      
     } else {
       const twoFactorToken = await generateTwoFactorToken(existingUser.email);
       await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);
@@ -86,7 +88,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
     });
   } catch (error) {
     if (error instanceof AuthError) {

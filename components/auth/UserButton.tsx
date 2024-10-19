@@ -27,9 +27,9 @@ const UserButton = () => {
         </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent  align="end">
+      <DropdownMenuContent align="end">
         <LogoutButton>
-          <DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer">
             <ExitIcon className="size-4 mr-2" />
             Logout
           </DropdownMenuItem>
