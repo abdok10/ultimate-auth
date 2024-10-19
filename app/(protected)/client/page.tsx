@@ -1,10 +1,10 @@
 "use client";
 
+import UserInfo from "@components/UserInfo";
 import { useCurrentUser } from "@hooks/useCurrentUser";
 
-const ClientPage = () => {
+const ServerPage = () => {
   const user = useCurrentUser();
-
-  return <div>Client Page</div>;
+  return <UserInfo label="📱 Client Component" user={user} />;
 };
-export default ClientPage;
+export default ServerPage;
