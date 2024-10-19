@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <nav className="bg-secondary flex justify-between items-center p-4  rounded-xl w-[600px] shadow">
       <div className="flex gap-2">
-        {["client", "server", "admin", "settings"].map((item, index) => (
+        {["server", "client", "admin", "settings"].map((item, index) => (
           <Button
             key={index}
             variant={pathname === `/${item}` ? "default" : "outline"}
