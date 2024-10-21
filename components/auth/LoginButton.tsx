@@ -7,7 +7,6 @@ import { LoginForm } from "@components/auth/LoginForm";
 interface LoginButtonProps {
   children: React.ReactNode;
   mode?: "modal" | "redirect";
-  asChild?: boolean;
 }
 
 export const LoginButton: React.FC<LoginButtonProps> = ({
@@ -22,7 +21,7 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
   if (mode === "modal") {
     return (
       <Dialog>
-        <DialogTrigger>{children}</DialogTrigger>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="bg-transparent border-none">
           <LoginForm />
         </DialogContent>
