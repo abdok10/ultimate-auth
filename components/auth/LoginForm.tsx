@@ -43,13 +43,13 @@ export const LoginForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      // code: "",
     },
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
     setSuccess("");
+    console.log("-------------", showTwoFactor);
     startTransition(() => {
       login(values, callbackUrl)
         .then((data) => {
@@ -71,6 +71,7 @@ export const LoginForm = () => {
           setError("Something went wrong!");
         });
     });
+    console.log("++++++++", showTwoFactor);
   };
 
   return (
@@ -83,7 +84,7 @@ export const LoginForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-4">
-            {showTwoFactor ? (
+            {showTwoFactor && (
               <FormField
                 control={form.control}
                 name="code"
@@ -94,14 +95,15 @@ export const LoginForm = () => {
                       <Input
                         {...field}
                         disabled={isPending}
-                        placeholder="123456"
+                        placeholder="12345"
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            ) : (
+            )}
+            {!showTwoFactor && (
               <>
                 <FormField
                   control={form.control}

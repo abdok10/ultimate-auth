@@ -94,7 +94,7 @@ const SettingsPage = () => {
                   </FormItem>
                 )}
               />
-              {!user.isOAth && (
+              {!user?.isOAth && (
                 <>
                   <FormField
                     control={form.control}
