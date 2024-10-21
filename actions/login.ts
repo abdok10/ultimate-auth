@@ -16,6 +16,7 @@ export const login = async (
   values: z.infer<typeof LoginSchema>,
   callbackUrl?: string | null
 ) => {
+  console.log({ values });
   const validatedField = LoginSchema.safeParse(values);
 
   if (!validatedField.success) {
@@ -76,6 +77,7 @@ export const login = async (
           userId: existingUser.id,
         },
       });
+      console.log("inside code 22222");
     } else {
       const twoFactorToken = await generateTwoFactorToken(existingUser.email);
       await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);

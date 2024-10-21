@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { settings } from "@actions/settings";
 import SubmitBtn from "@components/SubmitBtn";
-import { Button } from "@components/ui/button";
 import { Card, CardContent, CardHeader } from "@components/ui/card";
 import { useSession } from "next-auth/react";
 import { useState, useTransition } from "react";
@@ -45,11 +44,11 @@ const SettingsPage = () => {
     resolver: zodResolver(SettingsSchema),
     defaultValues: {
       // should be undefined, because we spread the values in the update method inside the server action
-      name: user.name || undefined,
-      email: user.email || undefined,
-      isTwoFactorEnabled: user.isTwoFactorEnabled || undefined,
-      role: user.role || undefined,
-      password: user.password || undefined,
+      name: user?.name || undefined,
+      email: user?.email || undefined,
+      isTwoFactorEnabled: user?.isTwoFactorEnabled || undefined,
+      role: user?.role || undefined,
+      password: undefined,
       newPassword: undefined,
     },
   });
@@ -77,7 +76,7 @@ const SettingsPage = () => {
       <CardContent>
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
+            <div className="placeholder:">
               <FormField
                 control={form.control}
                 name="name"
@@ -178,13 +177,13 @@ const SettingsPage = () => {
                   </FormItem>
                 )}
               />
-              {!user.isOAth && (
+              {!user?.isOAth && (
                 <>
                   <FormField
                     control={form.control}
                     name="isTwoFactorEnabled"
                     render={({ field }) => (
-                      <FormItem className="flex items-center justify-between rounded-lg border py-3 shadow-sm">
+                      <FormItem className="mt-2 flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                         <div className="space-y-0.5">
                           <FormLabel>Two Factor Authentication</FormLabel>
                           <FormDescription>
